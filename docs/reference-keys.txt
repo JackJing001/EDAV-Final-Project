@@ -8,3 +8,6 @@ conclusion
 overview
 topic
 questions
+source
+information-about-the-dataset
+details-about-variables
