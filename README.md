@@ -1,4 +1,4 @@
-A short description of our project.(TBD)
+EDAV Final Project in analyzing player data in FIFA21
 
 Link: jackjing001.github.io/edav-final-project/
 
