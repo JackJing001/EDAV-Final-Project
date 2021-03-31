@@ -1,1 +1,86 @@
 # Missing values
+```{r}
+library(readr)
+library(tidyverse)
+library(tidyr)
+library(mi)
+library(extracat)
+```
+
+## Count NA 
+```{r}
+df = read.csv('/Users/zack/Desktop/5702/2021/FIFA.csv')
+colSums(is.na(df)) %>% 
+  sort(decreasing = TRUE)
+```
+
+There are 63 variables that have missing value and 32 variables that have no missing value. Among the variables which contain NA, **Release.Clause** has the largest number of missing value which count up to 2045. While **Jersey.Number** has only 25 missing values which is the lowest. 
+
+
+## Overall visulizing
+```{r}
+visna(df,sort = "a")
+```
+
+By plotting the *visna* graph, there seems no uniform missing value patterns cross all variables. However, there are some missing value cluster that worth investigating. 
+  
+Above all, we can see that the most common missing value pattern is NA in all **Position-Score** related variables (LS, ST, RS, ... , GK). Also, there might be some missing value patterns in **Skill-Score** related variables (Defensive.Awareness, Composure, ..., GK.Diving) but are less explicit. Finally, there are no missing value pattern when it comes to **Release.Clause** and **Jersey.Number**.  
+  
+Since both Position-Score and Skill-Score will be affected by the players' position, we will further figure out whether there are certain missing value patterns against the **Position** variable.  
+  
+  
+## Position-Score Pattern
+```{r}
+df1 = df[,colSums(is.na(df))!=0]
+df2 = df1[,names(df1) %in% c("LS","ST","RS","LW","LF","CF","RF","RW","LAM","CAM","RAM","LM","LCM","CM","RCM","RM","LWB","LDM","CDM","RDM","RWB","LB","LCB","CB","RCB","RB","GK")]
+
+df_position = df2 %>%
+        mutate(Position = df$Position) %>%
+        pivot_longer(-Position, 
+          names_to = "variable", values_to = "value") %>%
+        mutate(missing = ifelse(is.na(value),"Yes","No"))
+
+df_position_missing = df_position[df_position$missing=="Yes",]
+
+df_position_missing %>%
+  group_by(Position,variable) %>%
+  summarise(cnt = n()) %>%
+  ungroup() %>%
+  tidyr::complete(Position, variable,fill = list(cnt=0)) %>%
+  ggplot(aes(y=variable,x=Position,fill=cnt)) +
+  geom_tile(color="white") +
+  scale_fill_gradient(low="steelblue",high="firebrick")+
+  theme_bw() +
+  ggtitle("Missing Value in Position-Score v.s. Position")
+```
+  
+Just as we guessed, all the missing value that related to position-score are found in those players who play the role of GK (Goal Keeper). This makes sense due to the goal keeper always stay near the goal.  
+  
+  
+## Skill-Score Pattern
+```{r}
+df3 = df1[,!names(df1) %in% c("Release.Clause","Defensive.Awareness","Jersey.Number","LS","ST","RS","LW","LF","CF","RF","RW","LAM","CAM","RAM","LM","LCM","CM","RCM","RM","LWB","LDM","CDM","RDM","RWB","LB","LCB","CB","RCB","RB","GK")]
+
+df_skill = df3 %>%
+        mutate(Position = df$Position) %>%
+        pivot_longer(-Position, 
+          names_to = "variable", values_to = "value") %>%
+        mutate(missing = ifelse(is.na(value),"Yes","No"))
+
+df_skill_missing = df_skill[df_skill$missing=="Yes",]
+
+df_skill_missing %>%
+  group_by(Position,variable) %>%
+  summarise(cnt = n()) %>%
+  ungroup() %>%
+  tidyr::complete(Position, variable,fill = list(cnt=0)) %>%
+  ggplot(aes(y=variable,x=Position,fill=cnt)) +
+  geom_tile(color="white") +
+  scale_fill_gradient(low="steelblue",high="firebrick")+
+  theme_bw()+
+  ggtitle("Missing Value in Skill-Score v.s. Position")
+```
+  
+According to the missing value heatmap of Skill-Score variables, Players that play the role of **ST** have the largest number of missing values. And **Composure** seems to have missing values cross all positions. Surprisingly, when it comes to the GK skills (GK.Reflexes, GK.Positioning, GK.Kicking, GK.Handing, GK.Diving), most of the missing values are lied in GK players. Finally, there are no other patterns can be found in this graph. 
+
+
