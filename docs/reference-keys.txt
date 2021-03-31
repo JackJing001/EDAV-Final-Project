@@ -11,3 +11,7 @@ questions
 source
 information-about-the-dataset
 details-about-variables
+count-na
+overall-visulizing
+position-score-pattern
+skill-score-pattern

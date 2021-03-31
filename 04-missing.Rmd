@@ -1,5 +1,5 @@
 # Missing values
-```{r message=FALSE}
+```{r}
 library(readr)
 library(tidyverse)
 library(tidyr)
@@ -9,7 +9,7 @@ library(extracat)
 
 ## Count NA 
 ```{r}
-df = read.csv('FIFA.csv')
+df = read.csv('/Users/zack/Desktop/5702/2021/FIFA.csv')
 colSums(is.na(df)) %>% 
   sort(decreasing = TRUE)
 ```
