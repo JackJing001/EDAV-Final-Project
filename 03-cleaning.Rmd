@@ -1,6 +1,7 @@
 # Data transformation
 
 ## Data Cleaning
+
 The original data is as follows:
 ```{r,echo=FALSE}
 fifa_data=read.csv("/Users/a1119/Desktop/2021/FIFA21.csv")
