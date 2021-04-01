@@ -24,7 +24,7 @@
 <meta name="author" content="Siwen Xie, Yifan Jing, Yuao Zhao" />
 
 
-<meta name="date" content="2021-03-31" />
+<meta name="date" content="2021-04-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -184,19 +184,19 @@
 </div>
 <div id="overall-visulizing" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Overall visulizing</h2>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/Users/zack/Desktop/5702/2021/visna.png" /></p>
 <p>By plotting the <em>visna</em> graph, there seems no uniform missing value patterns cross all variables. However, there are some missing value cluster that worth investigating.</p>
 <p>Above all, we can see that the most common missing value pattern is NA in all <strong>Position-Score</strong> related variables (LS, ST, RS, … , GK). Also, there might be some missing value patterns in <strong>Skill-Score</strong> related variables (Defensive.Awareness, Composure, …, GK.Diving) but are less explicit. Finally, there are no missing value pattern when it comes to <strong>Release.Clause</strong> and <strong>Jersey.Number</strong>.</p>
 <p>Since both Position-Score and Skill-Score will be affected by the players’ position, we will further figure out whether there are certain missing value patterns against the <strong>Position</strong> variable.</p>
 </div>
 <div id="position-score-pattern" class="section level2" number="4.3">
 <h2><span class="header-section-number">4.3</span> Position-Score Pattern</h2>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/Users/zack/Desktop/5702/2021/position%20score.png" /></p>
 <p>Just as we guessed, all the missing value that related to position-score are found in those players who play the role of GK (Goal Keeper). This makes sense due to the goal keeper always stay near the goal.</p>
 </div>
 <div id="skill-score-pattern" class="section level2" number="4.4">
 <h2><span class="header-section-number">4.4</span> Skill-Score Pattern</h2>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/Users/zack/Desktop/5702/2021/skill%20score.png" /></p>
 <p>According to the missing value heatmap of Skill-Score variables, Players that play the role of <strong>ST</strong> have the largest number of missing values. And <strong>Composure</strong> seems to have missing values cross all positions. Surprisingly, when it comes to the GK skills (GK.Reflexes, GK.Positioning, GK.Kicking, GK.Handing, GK.Diving), most of the missing values are lied in GK players. Finally, there are no other patterns can be found in this graph.</p>
 
 </div>

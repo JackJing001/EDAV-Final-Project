@@ -18,9 +18,11 @@ There are 63 variables that have missing value and 32 variables that have no mis
 
 
 ## Overall visulizing
-```{r}
+```{r fig.show='hide'}
 visna(df,sort = "a")
 ```
+
+![](/Users/zack/Desktop/5702/2021/visna.png)
 
 By plotting the *visna* graph, there seems no uniform missing value patterns cross all variables. However, there are some missing value cluster that worth investigating. 
   
@@ -30,7 +32,7 @@ Since both Position-Score and Skill-Score will be affected by the players' posit
   
   
 ## Position-Score Pattern
-```{r}
+```{r fig.show='hide'}
 df1 = df[,colSums(is.na(df))!=0]
 df2 = df1[,names(df1) %in% c("LS","ST","RS","LW","LF","CF","RF","RW","LAM","CAM","RAM","LM","LCM","CM","RCM","RM","LWB","LDM","CDM","RDM","RWB","LB","LCB","CB","RCB","RB","GK")]
 
@@ -54,11 +56,14 @@ df_position_missing %>%
   ggtitle("Missing Value in Position-Score v.s. Position")
 ```
   
+  
+![](/Users/zack/Desktop/5702/2021/position score.png)
+  
 Just as we guessed, all the missing value that related to position-score are found in those players who play the role of GK (Goal Keeper). This makes sense due to the goal keeper always stay near the goal.  
   
   
 ## Skill-Score Pattern
-```{r}
+```{r fig.show='hide'}
 df3 = df1[,!names(df1) %in% c("Release.Clause","Defensive.Awareness","Jersey.Number","LS","ST","RS","LW","LF","CF","RF","RW","LAM","CAM","RAM","LM","LCM","CM","RCM","RM","LWB","LDM","CDM","RDM","RWB","LB","LCB","CB","RCB","RB","GK")]
 
 df_skill = df3 %>%
@@ -80,6 +85,8 @@ df_skill_missing %>%
   theme_bw()+
   ggtitle("Missing Value in Skill-Score v.s. Position")
 ```
+  
+![](/Users/zack/Desktop/5702/2021/skill score.png)
   
 According to the missing value heatmap of Skill-Score variables, Players that play the role of **ST** have the largest number of missing values. And **Composure** seems to have missing values cross all positions. Surprisingly, when it comes to the GK skills (GK.Reflexes, GK.Positioning, GK.Kicking, GK.Handing, GK.Diving), most of the missing values are lied in GK players. Finally, there are no other patterns can be found in this graph. 
 
