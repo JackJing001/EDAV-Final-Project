@@ -1,5 +1,5 @@
 # Missing values
-```{r}
+```{r message=FALSE}
 library(readr)
 library(tidyverse)
 library(tidyr)
@@ -19,7 +19,8 @@ There are 63 variables that have missing value and 32 variables that have no mis
 
 ## Overall visulizing
 ```{r}
-visna(df,sort = "a")
+df1 = df[,colSums(is.na(df))!=0]
+visna(df1,sort = "a")
 ```
 
 By plotting the *visna* graph, there seems no uniform missing value patterns cross all variables. However, there are some missing value cluster that worth investigating. 
@@ -31,7 +32,6 @@ Since both Position-Score and Skill-Score will be affected by the players' posit
   
 ## Position-Score Pattern
 ```{r}
-df1 = df[,colSums(is.na(df))!=0]
 df2 = df1[,names(df1) %in% c("LS","ST","RS","LW","LF","CF","RF","RW","LAM","CAM","RAM","LM","LCM","CM","RCM","RM","LWB","LDM","CDM","RDM","RWB","LB","LCB","CB","RCB","RB","GK")]
 
 df_position = df2 %>%
@@ -42,6 +42,10 @@ df_position = df2 %>%
 
 df_position_missing = df_position[df_position$missing=="Yes",]
 
+theme_heat <- theme_classic() +
+  theme(axis.line = element_blank(),
+        axis.ticks = element_blank())
+
 df_position_missing %>%
   group_by(Position,variable) %>%
   summarise(cnt = n()) %>%
@@ -50,8 +54,9 @@ df_position_missing %>%
   ggplot(aes(y=variable,x=Position,fill=cnt)) +
   geom_tile(color="white") +
   scale_fill_gradient(low="steelblue",high="firebrick")+
-  theme_bw() +
+  theme_heat +
   ggtitle("Missing Value in Position-Score v.s. Position")
+  
 ```
   
 Just as we guessed, all the missing value that related to position-score are found in those players who play the role of GK (Goal Keeper). This makes sense due to the goal keeper always stay near the goal.  
@@ -77,7 +82,7 @@ df_skill_missing %>%
   ggplot(aes(y=variable,x=Position,fill=cnt)) +
   geom_tile(color="white") +
   scale_fill_gradient(low="steelblue",high="firebrick")+
-  theme_bw()+
+  theme_heat +
   ggtitle("Missing Value in Skill-Score v.s. Position")
 ```
   
