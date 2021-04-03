@@ -9,18 +9,18 @@ We scrapped the data from https://sofifa.com, which is the biggest player datase
 This dataset includes 18000+ players and 92 variables. Each player is a real world player. Some variables like name, height are real data, others like crossing, finishing are their ability ratings in the game.
 
 ## Details about variables
-Name, age, nationality, club, value, wage, preferred foot, position, height and weight are players' real information.
+**Name**, **age**, **nationality**, **club**, **value**, **wage**, **preferred foot**, **position**, **height** and **weight** are players' real information.
 
-Overall is their overall rating in the game, representing their current ability; potential is their potential rating in the game, representing their possible future ability.
+**Overall** is their overall rating in the game, representing their current ability; **potential** is their potential rating in the game, representing their possible future ability.
 
-Weak foot, skill moves, international reputation are rated from one star to five stars.
+**Weak foot**, **skill moves**, **international reputation** are rated from one star to five stars.
 
-Work rate is rated by low/medium/high, which represents their work rate in attack and defense.
+**Work rate** is rated by low/medium/high, which represents their work rate in attack and defense.
 
-Position is their best position in real world. Generally, players are divided into forward, midfielder, defender and goalkeeper. More specifically, forwards can be divided into different positions named as LS, ST, RS, LW, LF, CF, RF, RW; midfielders can be divided into LAM, CAM, RAM, LM, LCM, CM, RCM, RM, LDM, CDM, RDM; defenders can be divided into LWB, LB, LCB, CB, RCB, RB, RWB; goalkeeper is GK.
+**Position** is their best position in real world. Generally, players are divided into forward, midfielder, defender and goalkeeper. More specifically, forwards can be divided into different positions named as **LS, ST, RS, LW, LF, CF, RF, RW**; midfielders can be divided into **LAM, CAM, RAM, LM, LCM, CM, RCM, RM, LDM, CDM, RDM**; defenders can be divided into **LWB, LB, LCB, CB, RCB, RB, RWB**; goalkeeper is **GK**.
 
-( In these abbreviations, L = left, R = right, C = central, A = attacking, D = defensive, S & ST = striker, W = winger, F = forward, M = midfielder, B = back or defender. If you want more specific explanations, please refer to https://en.wikipedia.org/wiki/Association_football_positions. )
+( In these abbreviations, **L** = left, **R** = right, **C** = central, **A** = attacking, **D** = defensive, **S & ST** = striker, **W** = winger, **F** = forward, **M** = midfielder, **B** = back or defender. If you want more specific explanations, please refer to https://en.wikipedia.org/wiki/Association_football_positions. )
 
-In this dataset, position abbreviations like ST represents the rating of a player when he is playing in this position. 
+In this dataset, position abbreviations like **ST** represents the rating of a player when he is playing in this position. 
 
-Crossing, finishing, head accuracy and other variables represent a player's rating in this ability. 
+**Crossing**, **finishing**, **head accuracy** and other variables represent a player's rating in this ability. 

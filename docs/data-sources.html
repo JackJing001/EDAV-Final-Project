@@ -24,7 +24,7 @@
 <meta name="author" content="Siwen Xie, Yifan Jing, Yuao Zhao" />
 
 
-<meta name="date" content="2021-03-30" />
+<meta name="date" content="2021-04-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -82,10 +82,26 @@
 <li class="chapter" data-level="2.2" data-path="data-sources.html"><a href="data-sources.html#information-about-the-dataset"><i class="fa fa-check"></i><b>2.2</b> Information about the dataset</a></li>
 <li class="chapter" data-level="2.3" data-path="data-sources.html"><a href="data-sources.html#details-about-variables"><i class="fa fa-check"></i><b>2.3</b> Details about variables</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a></li>
-<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a></li>
+<li class="chapter" data-level="3" data-path="data-transformation.html"><a href="data-transformation.html"><i class="fa fa-check"></i><b>3</b> Data transformation</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-transformation.html"><a href="data-transformation.html#data-cleaning"><i class="fa fa-check"></i><b>3.1</b> Data Cleaning</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="missing-values.html"><a href="missing-values.html"><i class="fa fa-check"></i><b>4</b> Missing values</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="missing-values.html"><a href="missing-values.html#count-na"><i class="fa fa-check"></i><b>4.1</b> Count NA</a></li>
+<li class="chapter" data-level="4.2" data-path="missing-values.html"><a href="missing-values.html#overall-visulizing"><i class="fa fa-check"></i><b>4.2</b> Overall visulizing</a></li>
+<li class="chapter" data-level="4.3" data-path="missing-values.html"><a href="missing-values.html#position-score-pattern"><i class="fa fa-check"></i><b>4.3</b> Position-Score Pattern</a></li>
+<li class="chapter" data-level="4.4" data-path="missing-values.html"><a href="missing-values.html#skill-score-pattern"><i class="fa fa-check"></i><b>4.4</b> Skill-Score Pattern</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>5</b> Results</a></li>
-<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a></li>
+<li class="chapter" data-level="6" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>6</b> Interactive component</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="interactive-component.html"><a href="interactive-component.html#data"><i class="fa fa-check"></i><b>6.1</b> Data</a></li>
+<li class="chapter" data-level="6.2" data-path="interactive-component.html"><a href="interactive-component.html#interactive-graph"><i class="fa fa-check"></i><b>6.2</b> Interactive graph</a></li>
+<li class="chapter" data-level="6.3" data-path="interactive-component.html"><a href="interactive-component.html#how-to-interactive"><i class="fa fa-check"></i><b>6.3</b> How to interactive</a></li>
+<li class="chapter" data-level="6.4" data-path="interactive-component.html"><a href="interactive-component.html#results-1"><i class="fa fa-check"></i><b>6.4</b> Results</a></li>
+<li class="chapter" data-level="6.5" data-path="interactive-component.html"><a href="interactive-component.html#who-is-gonna-win-the-world-cup"><i class="fa fa-check"></i><b>6.5</b> Who is gonna win the World Cup!</a></li>
+</ul></li>
 <li class="chapter" data-level="7" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>7</b> Conclusion</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -118,14 +134,14 @@
 </div>
 <div id="details-about-variables" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> Details about variables</h2>
-<p>Name, age, nationality, club, value, wage, preferred foot, position, height and weight are players’ real information.</p>
-<p>Overall is their overall rating in the game, representing their current ability; potential is their potential rating in the game, representing their possible future ability.</p>
-<p>Weak foot, skill moves, international reputation are rated from one star to five stars.</p>
-<p>Work rate is rated by low/medium/high, which represents their work rate in attack and defense.</p>
-<p>Position is their best position in real world. Generally, players are divided into forward, midfielder, defender and goalkeeper. More specifically, forwards can be divided into different positions named as LS, ST, RS, LW, LF, CF, RF, RW; midfielders can be divided into LAM, CAM, RAM, LM, LCM, CM, RCM, RM, LDM, CDM, RDM; defenders can be divided into LWB, LB, LCB, CB, RCB, RB, RWB; goalkeeper is GK.</p>
-<p>( In these abbreviations, L = left, R = right, C = central, A = attacking, D = defensive, S &amp; ST = striker, W = winger, F = forward, M = midfielder, B = back or defender. If you want more specific explanations, please refer to <a href="https://en.wikipedia.org/wiki/Association_football_positions" class="uri">https://en.wikipedia.org/wiki/Association_football_positions</a>. )</p>
-<p>In this dataset, position abbreviations like ST represents the rating of a player when he is playing in this position.</p>
-<p>Crossing, finishing, head accuracy and other variables represent a player’s rating in this ability.</p>
+<p><strong>Name</strong>, <strong>age</strong>, <strong>nationality</strong>, <strong>club</strong>, <strong>value</strong>, <strong>wage</strong>, <strong>preferred foot</strong>, <strong>position</strong>, <strong>height</strong> and <strong>weight</strong> are players’ real information.</p>
+<p><strong>Overall</strong> is their overall rating in the game, representing their current ability; <strong>potential</strong> is their potential rating in the game, representing their possible future ability.</p>
+<p><strong>Weak foot</strong>, <strong>skill moves</strong>, <strong>international reputation</strong> are rated from one star to five stars.</p>
+<p><strong>Work rate</strong> is rated by low/medium/high, which represents their work rate in attack and defense.</p>
+<p><strong>Position</strong> is their best position in real world. Generally, players are divided into forward, midfielder, defender and goalkeeper. More specifically, forwards can be divided into different positions named as <strong>LS, ST, RS, LW, LF, CF, RF, RW</strong>; midfielders can be divided into <strong>LAM, CAM, RAM, LM, LCM, CM, RCM, RM, LDM, CDM, RDM</strong>; defenders can be divided into <strong>LWB, LB, LCB, CB, RCB, RB, RWB</strong>; goalkeeper is <strong>GK</strong>.</p>
+<p>( In these abbreviations, <strong>L</strong> = left, <strong>R</strong> = right, <strong>C</strong> = central, <strong>A</strong> = attacking, <strong>D</strong> = defensive, <strong>S &amp; ST</strong> = striker, <strong>W</strong> = winger, <strong>F</strong> = forward, <strong>M</strong> = midfielder, <strong>B</strong> = back or defender. If you want more specific explanations, please refer to <a href="https://en.wikipedia.org/wiki/Association_football_positions" class="uri">https://en.wikipedia.org/wiki/Association_football_positions</a>. )</p>
+<p>In this dataset, position abbreviations like <strong>ST</strong> represents the rating of a player when he is playing in this position.</p>
+<p><strong>Crossing</strong>, <strong>finishing</strong>, <strong>head accuracy</strong> and other variables represent a player’s rating in this ability.</p>
 
 </div>
 </div>
