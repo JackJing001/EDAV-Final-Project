@@ -16,3 +16,8 @@ overall-visulizing
 position-score-pattern
 skill-score-pattern
 data-cleaning
+data
+interactive-graph
+how-to-interactive
+results-1
+who-is-gonna-win-the-world-cup

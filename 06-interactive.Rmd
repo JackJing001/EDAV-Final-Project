@@ -1,3 +1,81 @@
 # Interactive component
 
+## Data
+This interactive graph shows overall and potential ratings of players in different nations. We choose Top 10 nations and players whose overall rating is greater than 75. The radius of the circle represents the number of players, so a circle with larger radius means more players with the same overall and potential rating.
 
+## Interactive graph
+<script src="https://d3js.org/d3.v6.js"></script>
+
+<style>
+body {
+  margin: 0;
+  font-family: arial, sans;
+}
+
+.label {
+  font-size: 15px;
+}
+
+.legend{
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.legend text,
+.axis text {
+  font-size: 13px;
+  fill: #333;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke-width:1px;
+  stroke: #e7e7e7;
+}
+
+circle {
+  stroke: #fff;
+}
+
+.bubble {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.bubble text {
+  opacity: 0;
+  pointer-events: none;
+  font-size: 15px;
+}
+
+.bubble:hover text {
+  opacity: 1;
+}
+
+.bubble:hover circle {
+  fill-opacity: 1;
+}
+
+</style>
+
+<div id="plot"></div>
+
+<script src="scatter.js"></script>
+
+## How to interactive
+Because many players have the same overall and potential ratings, the static graph is hard to show the different rating distributions in different nations. You can click the rectangular label on the right to check players' ratings in different nations. Then move your mouse over the circle to check the exact "Overall rating/Potential rating".
+
+If you want to reset the graph, just click a circle that you like :)
+
+## Results
+
+1. Brazil and Spain have the most good players whose overall ratings are greater than 75.
+2. However, if we only consider players whose overall ratings are greater than 85, then Brazil, France and Germany own the most excellent players.
+3. Only 4 players' overall ratings are greater than 90, they come from Argentina, Belgium, Brazil and Portugal. All of them are the most famous super stars in football world. Although I don't put their names in the graph, I believe if you know some football, you know they are Messi, De Bruyne, Neymar and C. Ronaldo.
+4. England, Italy, Portugal are the most potential nations. Although they don't have so many players whose overall ratings are greater than 85, they own a lot of players whose potential ratings are greater than 85.
+5. Spain owns a lot of good players whose overall ratings are greater than 75, but most of them are not potential or excellent enough.
+
+## Who is gonna win the World Cup!
+According to the data in FIFA21, we guess Brazil, France and Germany are the
+strongest competitors for the World Cup Championship in 2022. But in 2026, England, Italy and Portugal will join their competitions.
