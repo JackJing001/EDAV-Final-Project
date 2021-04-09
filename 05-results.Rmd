@@ -1,1 +1,152 @@
-# Results
+# Result
+
+## Average rating for different age groups
+```{r,echo=FALSE,message=FALSE}
+library(ggplot2)
+library(tidyr)
+
+library(dplyr)
+library(plyr)
+library(reshape2)
+library(forcats)
+
+df=read.csv("/Users/a1119/Desktop/EDA/Final\ Project/FIFA.csv")
+
+overall_age=df[c("Age","Overall")]
+result1=matrix(0,4,2)
+
+
+df1=subset(overall_age,Age<=20)
+result1[1,1]="<=20"
+result1[1,2]=round(mean(df1[,2]),0)
+
+df2=subset(overall_age,Age>20&Age<=30)
+result1[2,1]="20~30"
+result1[2,2]=round(mean(df2[,2]),0)
+
+
+df3=subset(overall_age,Age>30&Age<=40)
+result1[3,1]="30~40"
+result1[3,2]=round(mean(df3[,2]),0)
+
+df4=subset(overall_age,Age>40)
+result1[4,1]=">40"
+result1[4,2]=round(mean(df4[,2]),0)
+
+result1=data.frame(result1)
+
+colnames(result1)<-c("AgeRange","Avg_Overall")
+
+ggplot(transform(result1,AgeRange=factor(AgeRange,levels=c("<=20","20~30","30~40",">40"))))+geom_bar(aes(x=AgeRange,y=Avg_Overall),stat ="identity",fill="steelblue",width=0.6)+theme_minimal()+xlab("Age Range")+ylab("Average Overall Rating")+ggtitle("Average Rating for Players in different age group")+theme(plot.title=element_text(hjust = 0.5))
+
+```
+
+
+Commentary: This graph illustrates the average overall ratings for players in different age groups. From the bar chart above, we can conclude that players whose age is between 30 and 40 years old have the highest average rating. This finding is accord to the true story since the most famous football players like Lionel Messi and Cristiano Ronaldo are both over 30 years old and are at their peak period. Players who are less than 20 years old typically are still in an unfledged phase; thus, their ratings are typically lower than players who are above 20. Players who are greater than 40 years old also have a lower average rating since their ability has decreased as their ages increase and physical power decreases.
+
+
+## Histogram of Difference between Potential and Overall rating in different age groups
+
+```{r,echo=FALSE,message=FALSE}
+difference=df["Potential"]-df["Overall"]
+difference=cbind(difference,df$Age)
+difference['AgeRange']=0
+
+
+
+for(i in 1:18541)
+{
+  if(difference$`df$Age`[i]<=20)
+  {
+    difference$AgeRange[i]="<=20"
+  }
+  else if(difference$`df$Age`[i]>20&difference$`df$Age`[i]<=30)
+  {
+    difference$AgeRange[i]="20~30"
+  }
+  else 
+  {
+    difference$AgeRange[i]=">=30"
+  }
+}
+ggplot(transform(difference,
+      AgeRange=factor(AgeRange,levels=c("<=20","20~30",">=30")))) + 
+    geom_histogram(aes(x=Potential),bins = 20,color="darkblue", fill="lightblue")+ facet_wrap(~AgeRange)+xlab("Potential minus Overall")+ggtitle("Histogram of difference between overall rating and potential rating in different age group")+theme(plot.title=element_text(hjust = 0.5))
+```
+
+Commentary: The x-axis of the histogram above represents the difference between potential rating and overall rating of the players(Potential-Overall). The y-axis represents the count of the difference. For players less than 20 years old, most of their potential ratings are 10 to 20 lower than the overall rating. For players whose age is between 20 and 30, most of them have difference of 0, which means their overall rating equals potential rating. Some of them also has a difference between 1 and 15. Most of the players between 20 and 30 have equal value in their potential and overall rating. However, some of them has not be recognized fully by their potential. For players who are older than 30, almost all of the players have same value of potential and real rating. Since they are at the end of their football career, they should have be correctly rated.
+
+
+
+
+
+## Clubs that have the highest attack rate
+
+```{r,echo=FALSE,message=FALSE}
+df3=df[c("Club","work.rate1","work.rate2")]
+df3=df3[df3$work.rate1!="N/A",]
+df3=df3[df3$work.rate2!="N/A",]
+df3=df3[df3$Club!="",]
+df3[df3=="High"]<-3
+df3[df3=="Medium"]<-2
+df3[df3=="Low"]<-1
+
+
+df3$work.rate1=as.numeric(df3$work.rate1)
+df3$work.rate2=as.numeric(df3$work.rate2)
+
+temp=count(df3,"Club")
+
+
+
+result=aggregate(df3[,2:3],by=list(df3$Club),FUN = "mean")
+
+result=cbind(result,temp$freq)
+
+result=result[result$`temp$freq`>25,]
+
+
+result4=result%>%arrange(desc(result$work.rate1))%>%slice(1:50)
+result4=result4[,1:3]
+colnames(result4)<-c("club","attack rate","defense rate")
+result4 <- melt(result4,id.vars = 1)
+
+
+ggplot(result4,aes(value,fct_reorder2(club,variable=="attack rate", value, .desc = FALSE),color=variable))+geom_point()+theme(text = element_text(size=7))+ylab("Club")+xlab("Average work rate")+ggtitle("Average attack and defense rate for each club")+theme(plot.title=element_text(hjust = 0.5))
+```
+
+Commentary:The Cleveland dot plot above illustrate the average attack rate and average defense rate of clubs. The attack rate has three level 1 to 3. Level 1 means low, level 2 means medium and level 3 means high. We clean the data to find out the average level of attack rate and defense rate for all the players in each club. We also filter the club size that should be more than 25. We plot the 50 clubs that have the highest attack rate and order the dot by attack rate in descending order. We find out that Royal Antwerp FC has the highest average attack rate over all of its players. SK Slavia Praha and Manchester United has more balanced performance:both attack rate and defense rate are high.
+
+
+
+## Relationship between wage and rating in different age group
+
+```{r,echo=FALSE,message=FALSE}
+df4=df[c("Age","Wage","Overall")]
+for(i in 1:18541)
+{
+  if(df4$Age[i]<=20)
+  {
+    df4$Age[i]="<=20"
+  }
+  else if(df4$Age[i]>20&df4$Age[i]<=30)
+  {
+    df4$Age[i]="20~30"
+  }
+  else 
+  {
+    df4$Age[i]=">=30"
+  }
+}
+df4=df4[df4$Wage>10000,]
+
+
+
+
+p1=ggplot(transform(df4,
+      Age=factor(Age,levels=c("<=20","20~30",">=30"))),aes(x=Overall,y=Wage,shape=Age,color=Age))+geom_point()+geom_smooth(method=lm, se=FALSE)+xlab("Overall rating")
+p1
+```
+
+Commentary:The scatterplot represent the relationship between rating and wage of the player. We remove all the wages that equal to 0. We find out that the wage has a positive relationship to the overall rating. The trend is almost same for players in 20~30 years old and those who is greater than 30 years old. For younger players who is less than 20 years old, the slope of the regression line is smaller compared to other age groups, which means that they are not fully paid by their rating. Younger players typically earn less even though they have the same rating score.
+
