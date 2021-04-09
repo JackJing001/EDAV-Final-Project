@@ -16,3 +16,7 @@ overall-visulizing
 position-score-pattern
 skill-score-pattern
 data-cleaning
+average-rating-for-different-age-groups
+histogram-of-difference-between-potential-and-overall-rating-in-different-age-groups
+clubs-that-have-the-highest-attack-rate
+relationship-between-wage-and-rating-in-different-age-group

@@ -1,4 +1,4 @@
-# Result
+# Results
 
 ## Average rating for different age groups
 ```{r,echo=FALSE,message=FALSE}
