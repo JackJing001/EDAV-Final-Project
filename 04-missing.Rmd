@@ -17,7 +17,7 @@ colSums(is.na(df)) %>%
 There are 63 variables that have missing value and 32 variables that have no missing value. Among the variables which contain NA, **Release.Clause** has the largest number of missing value which count up to 2045. While **Jersey.Number** has only 25 missing values which is the lowest. 
 
 
-## Overall visulizing
+## Overall visualizing
 ```{r}
 df1 = df[,colSums(is.na(df))!=0]
 visna(df1,sort = "a")
