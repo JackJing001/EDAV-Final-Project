@@ -25,3 +25,11 @@ average-rating-for-different-age-groups
 histogram-of-difference-between-potential-and-overall-rating-in-different-age-groups
 clubs-that-have-the-highest-attack-rate
 relationship-between-wage-and-rating-in-different-age-group
+overall-visualizing
+relationship-between-wage-and-rating-in-different-age-groups
+is-left-foot-players-more-talented
+relationship-with-a-players-rating-in-different-positions
+relationship-with-a-players-rating-in-different-abilities
+are-there-a-lot-of-players-both-strong-and-fast
+what-ability-is-most-related-to-st-players
+distribution-of-overall-rating-in-some-famous-club
