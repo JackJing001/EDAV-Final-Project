@@ -24,7 +24,7 @@ library(plyr)
 ```{r 5chunk1,echo=FALSE,message=FALSE}
 
 #df=read.csv("/Users/a1119/Desktop/EDA/Final\ Project/FIFA.csv")
-df=read.csv("FIFA_processed.csv")
+df=read.csv("/Users/zack/Desktop/5702/2021/FIFA.csv")
 overall_age=df[c("Age","Overall")]
 result1=matrix(0,4,2)
 
@@ -167,8 +167,8 @@ Commentary:The scatterplot represent the relationship between rating and wage of
 
 ## Is left-foot players more talented? 
 
-```{r message=FALSE, echo=FALSE}
-df1=read_csv("FIFA_processed.csv")
+```{r message=FALSE}
+df1=read_csv("/Users/zack/Desktop/5702/2021/FIFA.csv")
 df1$`Preferred Foot` = as.factor(df1$`Preferred Foot`)
 df1$`Weak Foot` = as.factor(df1$`Weak Foot`)
 df1$Skill_moves = fct_rev(as.factor(df1$`Skill Moves`))
@@ -182,7 +182,7 @@ Commentary: The mosaic plot shows that left-foot players are less than the right
   
 ## Relationship with a player’s rating in different positions
 
-```{r message=FALSE, echo=FALSE}
+```{r}
 rate_position = select(df1,LW,LF,CF,LM,CM,CAM,CDM,ST,LB,LWB,CB,Position)
 rate_keyposition = rate_position[which(rate_position$Position %in% c("ST", "LW", "LF", "CF", "CAM", "CM", "LM","CDM", "LWB", "LB", "CB")),]
 
@@ -203,7 +203,7 @@ positions are almost the same. The relationship among LM, CM and CAM are relativ
   
 ## Relationship with a player’s rating in different abilities
 
-```{r message=FALSE, echo=FALSE}
+```{r}
 df1$Short_passing = df1$`Short Passing`
 df1$Heading_accuracy = df1$`Heading Accuracy`
 df1$Ball_control = df1$`Ball Control`
@@ -224,7 +224,7 @@ Commentary: The parallel coordinate plot of players different skills indicates t
   
 ## Are there a lot of players both strong and fast?
 
-```{r message=FALSE, echo=FALSE}
+```{r}
 df1$Sprint_speed = df1$`Sprint Speed`
 df_heatmap = select(df1,Sprint_speed,Strength)
 
@@ -257,7 +257,7 @@ Commentary: The heatmap indicates that most players are both medium in Strength 
   
 ## What ability is most related to ST players?
 
-```{r message=FALSE, echo=FALSE}
+```{r}
 df1$Shot_power = df1$`Shot Power`
 df_ST = select(df1,ST,Following,Crossing,Finishing,Heading_accuracy,Short_passing,Volleys,Dribbling,Ball_control,Acceleration,Sprint_speed,Reactions,Balance,Shot_power,Jumping,Stamina,Strength,Long_shots)
 
@@ -276,7 +276,7 @@ Commentary: The pair scatterplot reveals the relation between ST score and every
   
 ## Distribution of overall rating in some famous club
 
-```{r message=FALSE, echo=FALSE}
+```{r}
 df_famous_club = select(df1[which(df1$Club%in%c("FC Barcelona","Real Madrid","Manchester United","FC Bayern München","Chelsea","Arsenal","Juventus","Milan","Liverpool","Manchester City","Paris Saint-Germain","Tottenham Hotspur","Napoli")),],Overall,Club)
 df_famous_club$Club = as.factor(df_famous_club$Club)
 df_famous_club$Club <- with(df_famous_club, reorder(Club,Overall, median))
