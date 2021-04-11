@@ -1,30 +1,17 @@
 # Results
 
 ## Average rating for different age groups
-
-```{r message=FALSE,echo=FALSE}
-library(tidyverse)
+```{r 5chunk1,echo=FALSE,message=FALSE}
 library(ggplot2)
 library(tidyr)
+
 library(dplyr)
+library(plyr)
 library(reshape2)
 library(forcats)
-library(ggthemes)
-library(ggmosaic)
-library(vcd)
-library(readr)
-library(RColorBrewer)
-library(GGally)
-library(gclus)
-library(parcoords)
-library(plyr)
-```
 
+df=read.csv("/Users/a1119/Desktop/EDA/Final\ Project/FIFA.csv")
 
-```{r 5chunk1,echo=FALSE,message=FALSE}
-
-#df=read.csv("/Users/a1119/Desktop/EDA/Final\ Project/FIFA.csv")
-df=read.csv("/Users/zack/Desktop/5702/2021/FIFA.csv")
 overall_age=df[c("Age","Overall")]
 result1=matrix(0,4,2)
 
@@ -100,7 +87,6 @@ df3=df[c("Club","work.rate1","work.rate2")]
 df3=df3[df3$work.rate1!="N/A",]
 df3=df3[df3$work.rate2!="N/A",]
 df3=df3[df3$Club!="",]
-
 df3[df3=="High"]<-3
 df3[df3=="Medium"]<-2
 df3[df3=="Low"]<-1
@@ -163,127 +149,3 @@ p1
 ```
 
 Commentary:The scatterplot represent the relationship between rating and wage of the player. We remove all the wages that equal to 0. We find out that the wage has a positive relationship to the overall rating. The trend is almost same for players in 20~30 years old and those who is greater than 30 years old. For younger players who is less than 20 years old, the slope of the regression line is smaller compared to other age groups, which means that they are not fully paid by their rating. Younger players typically earn less even though they have the same rating score.
-
-
-## Is left-foot players more talented? 
-
-```{r message=FALSE}
-df1=read_csv("/Users/zack/Desktop/5702/2021/FIFA.csv")
-df1$`Preferred Foot` = as.factor(df1$`Preferred Foot`)
-df1$`Weak Foot` = as.factor(df1$`Weak Foot`)
-df1$Skill_moves = fct_rev(as.factor(df1$`Skill Moves`))
-df1$Weak_foot = df1$`Weak Foot`
-df1$Preferred_foot = df1$`Preferred Foot`
-vcd::mosaic(Skill_moves ~ Preferred_foot+Weak_foot, direction = c("v","v","h"), data=df1,shade=TRUE,highlighting_fill= brewer.pal(5, "Blues"))
-```
-  
-
-Commentary: The mosaic plot shows that left-foot players are less than the right-foot players. In each group, weak_foot scored 3 is the most common subset. The portions of the **most talented players** (skill_moves scored 5) in every single subset are almost the same, which indicates that there is no evidence to show that left-foot players are more talented than the right-foot players. However, the proportion of the **talented players** (skill_moves scored 4) in left-foot athletes is slightly higher than that in the right-foot athletes. Thus, we conclude the left-foot players are **slightly more talented** than the right-foot players. 
-  
-## Relationship with a player’s rating in different positions
-
-```{r}
-rate_position = select(df1,LW,LF,CF,LM,CM,CAM,CDM,ST,LB,LWB,CB,Position)
-rate_keyposition = rate_position[which(rate_position$Position %in% c("ST", "LW", "LF", "CF", "CAM", "CM", "LM","CDM", "LWB", "LB", "CB")),]
-
-set.seed(0617)
-split = sample(1:nrow(rate_keyposition),200)
-sample_rate_keyposition = rate_keyposition[split,]
-
-
-ggparcoord(sample_rate_keyposition,columns = 1:11, groupColumn = "Position",
-           alphaLines = 0.6, scale="uniminmax")+
-  theme(legend.position = "right")+
-  theme_classic() +
-  ggtitle("Relationship of Different Positions")
-```
-  
-Commentary: Due to our dataset contains too many player-positions, only 11 crucial roles are selected. By checking the parallel coordinate plot above, we can see that LF and CF are replaceable with each other since the value of those two
-positions are almost the same. The relationship among LM, CM and CAM are relatively weak. However, it shows a strong negative relationship between CAM and CDM due to the lines are twisted. We could also see the negative relationship between CDM and ST as well as ST and LB. The relationship among LB, LWB and CB is hard to figure out. 
-  
-## Relationship with a player’s rating in different abilities
-
-```{r}
-df1$Short_passing = df1$`Short Passing`
-df1$Heading_accuracy = df1$`Heading Accuracy`
-df1$Ball_control = df1$`Ball Control`
-df1$Long_shots = df1$`Long Shots`
-df1$Standing_tackle = df1$`Standing Tackle`
-df1$Sliding_tackle = df1$`Sliding Tackle`
-key_skill = select(df1,Heading_accuracy,Dribbling,Ball_control,Short_passing,Long_shots,Standing_tackle,Sliding_tackle,Finishing)
-set.seed(0617)
-split = sample(1:nrow(key_skill),200)
-sample_key_skill = key_skill[split,]
-parcoords(sample_key_skill,
-  brushMode = "1D-axes",reorderable = TRUE, 
-  color = list(colorBy = "Position"),rownames = FALSE, 
-  withD3 = TRUE, queue = TRUE,alpha = 0.5)
-```
-  
-Commentary: The parallel coordinate plot of players different skills indicates that there are a few players scored low in every skills listed above. The reason of that is because those players are Goalkeepers whose abilities are not represented by the skills in the chart. In this way, by analyzing players in other positions, it's easy to find out that Heading_accuracy is negatively associated with Dribbling. Players who are good at Dribbling are also perform well in Ball control as well as in Short passing. There is a strong negative relationship between Long shots and Standing tackle. Those players do well in Standing tackle would also do well in Sliding tackle, however, these players are bad at Finishing. 
-  
-## Are there a lot of players both strong and fast?
-
-```{r}
-df1$Sprint_speed = df1$`Sprint Speed`
-df_heatmap = select(df1,Sprint_speed,Strength)
-
-df_heatmap$Strength_level = cut(df_heatmap$Strength,c(0,40,50,60,70,80,90,100),
-              labels=c("very weak","weak","medium weak","medium","medium strong","strong","very strong"))
-
-df_heatmap$Speed_level = cut(df_heatmap$Sprint_speed, c(0,40,50,60,70,80,90,100),
-              labels=c("very slow","slow","medium slow","medium","medium fast","fast","very fast"),na.rm=TRUE)
-df_heatmap = na.omit(df_heatmap)
-theme_heat = theme_classic() +
-              theme(axis.line = element_blank(),
-              axis.ticks = element_blank())
-
-detach("package:plyr")
-
-df_heatmap %>% 
-  group_by(Strength_level,Speed_level)%>%
-  summarise(count=dplyr::n()) %>%
-  ungroup()%>%
-  ggplot(aes(x=Strength_level, y=Speed_level, fill = count)) +
-    geom_tile(color="grey") +
-    scale_fill_gradient(low="steelblue",high="firebrick")+
-    coord_equal()+
-    theme_heat +
-    ggtitle("Speed vs Strength")
-```
-  
-Commentary: The heatmap indicates that most players are both medium in Strength and Speed. There are a few athletes that are beyond medium both in speed and strength. However, there is no player that is super-fast in speed but also very strong in strength. 
-
-  
-## What ability is most related to ST players?
-
-```{r}
-df1$Shot_power = df1$`Shot Power`
-df_ST = select(df1,ST,Following,Crossing,Finishing,Heading_accuracy,Short_passing,Volleys,Dribbling,Ball_control,Acceleration,Sprint_speed,Reactions,Balance,Shot_power,Jumping,Stamina,Strength,Long_shots)
-
-df_ST = df_ST[which(df_ST$Following<=100),]
-
-df_ST = na.omit(df_ST)
-set.seed(0617)
-split = sample(1:nrow(df_ST),0.2*nrow(df_ST))
-sample_ST = df_ST[split,]
-cpairs(sample_ST,panel.colors = dmat.color(cor(df_ST)),pch=".",gap=.4,upper.panel=NULL,main="ST vs Skills")
-```
-
-  
-Commentary: The pair scatterplot reveals the relation between ST score and every single players' skills. The strong correlation are painted pink. Yellow represents medium and blue stands for the weak correlation. The abilities that are most related to ST performance are: Crossing, Finishing, Short_passing, Volleys, Dribbling, Ball_control, Reaction, Shot_power and long_shot. 
-
-  
-## Distribution of overall rating in some famous club
-
-```{r}
-df_famous_club = select(df1[which(df1$Club%in%c("FC Barcelona","Real Madrid","Manchester United","FC Bayern München","Chelsea","Arsenal","Juventus","Milan","Liverpool","Manchester City","Paris Saint-Germain","Tottenham Hotspur","Napoli")),],Overall,Club)
-df_famous_club$Club = as.factor(df_famous_club$Club)
-df_famous_club$Club <- with(df_famous_club, reorder(Club,Overall, median))
-ggplot(df_famous_club,aes(x=Overall,y=Club))+
-  geom_boxplot() +
-  theme_classic() +
-  ggtitle("Club Overall Score Distribution")
-```
-
-Commentary: The club-overall boxplot indicates that **FC Bayern München** is the only club that the median of overall score is greater than 80. **Real Madrid** and **Juventus** are nearly the same which equals to 80. The player that gets the highest score belongs to **FC Barcelona**. Players' overall score are pretty close in **FC Bayern München** as well as in **Napoli** and **Milan**. By considering the median, extremum and the distribution of overall score, we believe the top 3 clubs are **FC Bayern München**, **Juventus** and **FC Barcelona**.
